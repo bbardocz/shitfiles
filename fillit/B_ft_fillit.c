@@ -6,7 +6,7 @@
 /*   By: bbardocz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 15:19:24 by bbardocz          #+#    #+#             */
-/*   Updated: 2017/12/11 19:08:05 by bbardocz         ###   ########.fr       */
+/*   Updated: 2017/12/15 15:34:45 by bbardocz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ char		**ft_blanksqr(int sqrside)
 		i = 0;
 		j++;
 	}
-	blanksqr[j] = (char *)malloc(sizeof(char) * 1);
-	blanksqr[j][0] = '\0';
+	blanksqr[j] = ft_strnew((size_t)sqrside);
 	return (blanksqr);
 }
 
@@ -68,31 +67,102 @@ int			ft_c_blocks(f_list *tetriminos)
 	return (c_blocks);
 }
 
-void		ft_feel_it(f_list *tet, char **sqr)
+int			pos_is_valid(char **sqr, int sqrside)
+{
+	int		y;
+	int		x;
+	int		q;
+	int		touch;
+
+	y = 0;
+	x = 0;
+	touch = 0;
+	ft_putstr("show it to me\n");
+	print_sqr(sqr, sqrside);
+	while (sqr[y][x] != '\0')
+	{
+		while (sqr[y][x] != '\0')
+		{
+			if ((sqr[y][x] != '.' && sqr[y][x] == sqr[y][x + 1]) ||
+			(sqr[y][x] != '.' && sqr[y][x] == sqr[y + 1][x]))
+			{
+				printf("touch because: %c == %c (x = %i)\n", sqr[y][x], sqr[y][x + 1], x);
+				printf("Ou because: %c == %c\n", sqr[y][x], sqr[y + 1][x]);
+				touch++;
+			}
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+	printf("%i\n, touch: %i\n", touch % 3, touch);
+	if (touch % 3 == 0)
+	{
+		ft_putstr("valid 1\n");
+		print_sqr(sqr, sqrside);
+		return (1);
+	}
+	ft_putstr("error 0\n");
+	return (0);
+}
+
+void		remove_tet(char **sqr, char c)
+{
+	int		x;
+	int		y;
+
+	x = 0;
+	y = 0;
+	while (sqr[y][x] != '\0')
+	{
+		while (sqr[y][x] != '\0')
+		{
+			if (sqr[y][x] == c)
+				sqr[y][x] = '.';
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+}
+
+void		ft_feel_it(f_list *tet, char **sqr, int sqrside)
 {
 	int		i;
 	char	c;
-	int		j;
+	int		x;
 	int		y;
+	int		pos;
 
 	i = 0;
-	j = 0;
-	y = 0;
+	x = tet->x[i];
+	y = tet->y[i];
+	pos = 0;
 	c = 'A';
 	while (tet->next != NULL)
 	{
 		while (i < 4)
 		{
-			if (sqr[tet->x[i]][tet->y[i]] == '#' || sqr[tet->x[i + 1]]
-			[tet->y[i + 1]] == '#' || sqr[tet->x[i + 2]][tet->y[i + 2]] == '#'
-			|| sqr[tet->x[i + 3]][tet->y[i + 3]] == '#')
-				tet->x[0] = tet->x[0] + 1;
-			sqr[j][tet->y[i]] = c;
+			x = tet->x[i];
+			y = tet->y[i];
+			while (sqr[y][x + pos] != '.')
+				pos++;
+			sqr[y][x + pos] = c;
 			i++;
 		}
 		i = 0;
-		c++;
-		tet = tet->next;
+		if (pos_is_valid(sqr, sqrside) == 1)
+		{
+			c++;
+			tet = tet->next;
+		}
+		else if (pos_is_valid(sqr, sqrside) == 0)
+		{
+			remove_tet(sqr, c);
+			ft_putstr("correction: \n");
+			print_sqr(sqr, sqrside);
+			pos++;
+		}
 	}
 }
 
@@ -119,6 +189,6 @@ void		ft_fillit(f_list *tetriminos)
 	sqr = ft_blanksqr(sqrside);
 	print_sqr(sqr, sqrside);
 	ft_putchar('\n');
-	ft_feel_it(tetriminos, sqr);
+	ft_feel_it(tetriminos, sqr, sqrside);
 	print_sqr(sqr, sqrside);
 }
