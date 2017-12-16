@@ -6,16 +6,16 @@
 /*   By: bbardocz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 15:19:24 by bbardocz          #+#    #+#             */
-/*   Updated: 2017/12/15 15:34:45 by bbardocz         ###   ########.fr       */
+/*   Updated: 2017/12/16 14:52:09 by bbardocz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "B_Header.h"
+#include "fillit.h"
 
 #include <stdio.h>
 
-char		**ft_blanksqr(int sqrside)
+char		**blanksqr(int sqrside)
 {
 	int		x;
 	int		y;
@@ -46,7 +46,7 @@ char		**ft_blanksqr(int sqrside)
 	return (blanksqr);
 }
 
-int			ft_c_blocks(f_list *tetriminos)
+int			c_blocks(f_list *tetriminos)
 {
 	int		i;
 	int		c_blocks;
@@ -126,7 +126,7 @@ void		remove_tet(char **sqr, char c)
 	}
 }
 
-void		ft_feel_it(f_list *tet, char **sqr, int sqrside)
+void		feel_it(f_list *tet, char **sqr, int sqrside)
 {
 	int		i;
 	char	c;
@@ -177,18 +177,18 @@ void		print_sqr(char **sqr, int sqrside)
 	}
 }
 
-void		ft_fillit(f_list *tetriminos)
+void		fillit(f_list *tetriminos)
 {
 	int		sqrside;
 	char	**sqr;
 
-	sqrside = (ft_c_blocks(tetriminos) / ft_sqrt(ft_c_blocks(tetriminos)));
+	sqrside = (c_blocks(tetriminos) / ft_sqrt(c_blocks(tetriminos)));
 	sqr = (char **)malloc (sizeof(char *) * (sqrside + 1));
 	if (!(sqr))
 		return ;
-	sqr = ft_blanksqr(sqrside);
+	sqr = blanksqr(sqrside);
 	print_sqr(sqr, sqrside);
 	ft_putchar('\n');
-	ft_feel_it(tetriminos, sqr, sqrside);
+	feel_it(tetriminos, sqr, sqrside);
 	print_sqr(sqr, sqrside);
 }

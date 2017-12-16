@@ -6,7 +6,7 @@
 /*   By: bbardocz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/30 15:35:39 by bbardocz          #+#    #+#             */
-/*   Updated: 2017/12/15 14:31:06 by bbardocz         ###   ########.fr       */
+/*   Updated: 2017/12/16 14:51:30 by bbardocz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct				fillit_list
 	struct fillit_list		*next;
 }							f_list;
 
+f_list						*get_tetriminos(int fd);
+void						fillit(f_list *tetriminos);
 void						print_sqr(char **sqr, int sqrside);
 int							ft_sqrt(int nb);
-char						**trim(char **tetriminos);

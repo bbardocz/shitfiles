@@ -6,15 +6,15 @@
 #    By: bbardocz <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/28 18:15:33 by bbardocz          #+#    #+#              #
-#    Updated: 2017/12/07 15:21:24 by bbardocz         ###   ########.fr        #
+#    Updated: 2017/12/16 14:45:14 by bbardocz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = B_fillit
+NAME = fillit
 
-SRC = B_main.c ft_get_tetriminos.c B_ft_fillit.c B_ft_sqrt.c
+SRC = main.c get_tetriminos.c fillit.c sqrt.c
 
-OBJ = B_main.o ft_get_tetriminos.o B_ft_fillit.o B_ft_sqrt.o
+OBJ = main.o get_tetriminos.o fillit.o sqrt.o
 
 all: $(NAME)
 

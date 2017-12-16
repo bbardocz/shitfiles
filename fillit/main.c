@@ -6,7 +6,7 @@
 /*   By: bbardocz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 18:04:25 by bbardocz          #+#    #+#             */
-/*   Updated: 2017/12/07 19:26:56 by bbardocz         ###   ########.fr       */
+/*   Updated: 2017/12/16 14:49:59 by bbardocz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "B_Header.h"
-
-f_list	*ft_get_tetriminos(int fd);
-void	ft_fillit(f_list *tetriminos);
-int		ft_sqrt(int nb);
+#include "fillit.h"
 
 int		main(int argc, char **argv)
 {
@@ -34,7 +30,7 @@ int		main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd != -1)
 	{
-		tetriminos = ft_get_tetriminos(fd);
+		tetriminos = get_tetriminos(fd);
 		if (tetriminos == NULL)
 		{
 			ft_putstr("It failed\n");
@@ -42,7 +38,7 @@ int		main(int argc, char **argv)
 		}
 		if (tetriminos != NULL)
 			ft_putstr("It didn't fail nigga\n");
-		ft_fillit(tetriminos);
+		fillit(tetriminos);
 	}
 	else if (fd == -1)
 	{

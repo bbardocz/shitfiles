@@ -6,7 +6,7 @@
 /*   By: bbardocz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 18:12:07 by bbardocz          #+#    #+#             */
-/*   Updated: 2017/12/11 18:36:47 by bbardocz         ###   ########.fr       */
+/*   Updated: 2017/12/16 14:51:07 by bbardocz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include "B_Header.h"
+#include "fillit.h"
 
 #include <stdio.h>
 // diviser pour ligne y
 // modulo pour colone x
-void		ft_print_tetriminos(f_list *tet)
+void		print_tetriminos(f_list *tet)
 {
 	while (tet->next != NULL)
 	{
@@ -43,7 +43,7 @@ void		ft_print_tetriminos(f_list *tet)
 	}
 }
 
-int			ft_check_touch(char *tetriminos)
+int			check_touch(char *tetriminos)
 {
 	int		touch;
 	int		i;
@@ -65,7 +65,7 @@ int			ft_check_touch(char *tetriminos)
 	return (0);
 }
 
-char		*ft_trim2(char *tet)
+char		*trimline(char *tet)
 {
 	int		i;
 	int		htag;
@@ -91,7 +91,7 @@ char		*ft_trim2(char *tet)
 	return (tet);
 }
 
-char		*ft_trim(char *tet)
+char		*trimcol(char *tet)
 {
 	int		i;
 
@@ -117,10 +117,10 @@ char		*ft_trim(char *tet)
 		i = 0;
 	}
 	printf("trim c: \n%s\n", tet);
-	return (ft_trim2(tet));
+	return (trimline(tet));
 }
 
-int			ft_check_tetriminos(f_list *tetriminos)
+int			check_tetriminos(f_list *tetriminos)
 {
 	int		form;
 	int		i;
@@ -139,15 +139,15 @@ int			ft_check_tetriminos(f_list *tetriminos)
 		if (form != 8 || tetriminos->t_tab[4] != '\n'
 		|| tetriminos->t_tab[9] != '\n' || tetriminos->t_tab[14] != '\n'
 		|| tetriminos->t_tab[19] != '\n'
-		|| ft_check_touch(tetriminos->t_tab) == -1)
+		|| check_touch(tetriminos->t_tab) == -1)
 			return (-1);
-		tetriminos->t_tab = ft_trim(tetriminos->t_tab);
+		tetriminos->t_tab = trimcol(tetriminos->t_tab);
 		tetriminos = tetriminos->next;
 	}
 	return (0);
 }
 
-void		ft_fill_list(int fd, f_list *tetriminos)
+void		fill_list(int fd, f_list *tetriminos)
 {
 	while (read(fd, tetriminos->t_tab, 21) != 0)
 	{
@@ -217,11 +217,11 @@ f_list		*get_coord(f_list *tet)
 		i = 0;
 		tet = tet->next;
 	}
-	ft_print_tetriminos(ret);
+	print_tetriminos(ret);
 	return (ret);
 }
 
-f_list		*ft_get_tetriminos(int fd)
+f_list		*get_tetriminos(int fd)
 {
 	f_list	*tetriminos;
 	f_list	*check;
@@ -238,9 +238,9 @@ f_list		*ft_get_tetriminos(int fd)
 		return (NULL);
 	tetriminos = tetriminos->next;
 	tetriminos->t_tab = (char *)malloc(sizeof(char) * 21);
-	ft_fill_list(fd, tetriminos);
-//	ft_print_tetriminos(first);
-	if (ft_check_tetriminos(check) == 0)
+	fill_list(fd, tetriminos);
+//	print_tetriminos(first);
+	if (check_tetriminos(check) == 0)
 	{
 		ft_putstr("SUCCES\n");
 		return (get_coord(first));
