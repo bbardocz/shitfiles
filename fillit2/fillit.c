@@ -6,7 +6,7 @@
 /*   By: bbardocz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 16:56:28 by bbardocz          #+#    #+#             */
-/*   Updated: 2018/01/06 17:35:15 by bbardocz         ###   ########.fr       */
+/*   Updated: 2018/01/07 15:48:42 by bbardocz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		pos_is_valid(f_list *pieces, char **sqr, int sqrside, int *pos)
 			if ((y[i] + *pos / sqrside) >= sqrside)
 				return (0);
 			if ((x[i] + *pos % sqrside) >= sqrside ||
-			(sqr[y[i] + *pos / sqrside][x[i] + *pos %sqrside] != '.'))
+			(sqr[y[i] + *pos / sqrside][x[i] + *pos % sqrside] != '.'))
 				j = 1;
 			i++;
 		}
@@ -44,7 +44,7 @@ int		pos_is_valid(f_list *pieces, char **sqr, int sqrside, int *pos)
 	i = 0;
 	while (i < 4)
 	{
-		sqr[y[i] + *pos / sqrside][x[i] + *pos %sqrside] = pieces->c;
+		sqr[y[i] + *pos / sqrside][x[i] + *pos % sqrside] = pieces->c;
 		i++;
 	}
 	return (1);
