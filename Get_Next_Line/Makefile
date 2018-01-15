@@ -6,7 +6,7 @@
 #    By: bbardocz <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/15 15:16:23 by bbardocz          #+#    #+#              #
-#    Updated: 2018/01/15 19:02:17 by bbardocz         ###   ########.fr        #
+#    Updated: 2018/01/15 20:14:14 by bbardocz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ OBJ		= main.o get_next_line.o
 
 CC		= cc
 LIBFTD	= libft
-LDFLAGS	= -Wall -Wextra -Werror -I$(LIBFTD) -g
+LDFLAGS	= -Wall -Wextra -Werror -fsanitize=address -I$(LIBFTD) -g
 LDLIBS	= -L$(LIBFTD) -lft
 
 all: $(NAME)

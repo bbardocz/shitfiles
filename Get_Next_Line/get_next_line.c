@@ -6,7 +6,7 @@
 /*   By: bbardocz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 15:22:57 by bbardocz          #+#    #+#             */
-/*   Updated: 2018/01/15 19:41:49 by bbardocz         ###   ########.fr       */
+/*   Updated: 2018/01/15 20:34:44 by bbardocz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int		find_eol(char *s)
 {
 	int			i;
 
+	if (s == NULL)
+		return (-1);
 	i = 0;
 	while (s[i] != '\n' && s[i] != '\0')
 		i++;
@@ -44,8 +46,12 @@ int		get_next_line(const int fd, char **line)
 
 	if (fd < 0 || BUFF_SIZE < 0 || !line)
 		return (-1);
-	if (*line[0] != '\0' && (retr = 1))
-		*line = (ft_strchr(save, '\n') + 1);
+	if (*line && (retr = 1))
+	{
+		save = (ft_strchr(save, '\n'));
+		ft_strncpy(*line, save, ft_strlen(save));
+	}
+	printf("%s\n", *line);
 	if ((save = ft_realloc(save, BUFF_SIZE)) == NULL)
 		return (-1);
 	while ((ret = find_eol(*line)) == -1 && retr > 0)
