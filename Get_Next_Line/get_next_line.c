@@ -6,7 +6,7 @@
 /*   By: bbardocz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 15:22:57 by bbardocz          #+#    #+#             */
-/*   Updated: 2018/01/15 20:34:44 by bbardocz         ###   ########.fr       */
+/*   Updated: 2018/01/16 15:39:29 by bbardocz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,13 @@ int		find_eol(char *s)
 	while (s[i] != '\n' && s[i] != '\0')
 		i++;
 	if (s[i] == '\0')
+	{
 		return (-1);
+	}
 	if (s[i] == '\n')
+	{
 		return (i);
+	}
 	return (-2);
 }
 
@@ -36,6 +40,17 @@ char	*strjoin_sel(char *line, char *save)
 	if (!line)
 		return (ft_strdup(save));
 	return (ft_strjoin(line, save));
+}
+
+void	*ft_re_alloc(void *p, size_t size)
+{
+	char	*new;
+
+	if (!p)
+		return (ft_memalloc(size));
+	new = ft_memalloc(size);
+	ft_memdel(&p);
+	return (new);
 }
 
 int		get_next_line(const int fd, char **line)
@@ -48,12 +63,11 @@ int		get_next_line(const int fd, char **line)
 		return (-1);
 	if (*line && (retr = 1))
 	{
-		save = (ft_strchr(save, '\n'));
-		ft_strncpy(*line, save, ft_strlen(save));
+		*line = ((ft_strchr(save, '\n') + 1));
 	}
-	printf("%s\n", *line);
-	if ((save = ft_realloc(save, BUFF_SIZE)) == NULL)
-		return (-1);
+	if (!save)
+		if ((save = ft_memalloc(BUFF_SIZE)) == NULL)
+			return (-1);
 	while ((ret = find_eol(*line)) == -1 && retr > 0)
 		if ((retr = read(fd, save, BUFF_SIZE)) > 0)
 		{

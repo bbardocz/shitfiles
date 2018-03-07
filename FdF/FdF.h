@@ -1,37 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   FdF.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bbardocz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/15 15:12:37 by bbardocz          #+#    #+#             */
-/*   Updated: 2018/01/15 20:09:47 by bbardocz         ###   ########.fr       */
+/*   Created: 2018/03/05 15:50:58 by bbardocz          #+#    #+#             */
+/*   Updated: 2018/03/07 17:26:45 by bbardocz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
+#ifndef FDF_H
+# define FDF_H
+# define TX 2
+# define TY 2
+# define TZ 2
+# define SX 2
+# define SY 2
+# define SZ 2
 
-int		main(int argc, char **argv)
+typedef struct		s_coord
 {
-	int		fd;
-	char	*line = NULL;
-	int		ret;
+	int				**tab;
+	int				struct_i;
+	struct s_coord	*next;
+}					t_coord;
 
-	(void)argc;
-	fd = open(argv[1], O_RDONLY);
-	while ((ret = get_next_line(fd, &line)) != 0)
-	{
-		if (ret == -1)
-		{
-			printf("error\n");
-			return (0);
-		}
-		printf("RESULT: %s\n", line);
-	}
-//	get_next_line(fd, &line);
-	return (0);
-}
+t_coord		*create_struct(int);
+void		put_line(int *tab, void *mlx_ptr, void *win_ptr);
+int			**translation_matrice(void);
+int			**scaling_matrice(void);
+int			**matrice_mult(int **M1, int **M2);
+#endif
